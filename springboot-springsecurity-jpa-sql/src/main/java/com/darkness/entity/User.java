@@ -8,12 +8,6 @@ import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.util.Set;
 
-/**
- * @author tranguyenvan
- * @version 1.0.0
- * @since 1.0.0
- * */
-
 @Entity
 @Data
 @NoArgsConstructor
@@ -32,11 +26,11 @@ public class User implements Serializable {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-        name = "user_role",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "role_id")
+            name = "user_role",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
     private Set<Role> roles;
 }

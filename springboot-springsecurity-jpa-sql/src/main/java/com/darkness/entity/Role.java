@@ -5,12 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-
-/**
- * @author tranguyenvan
- * @version 1.0.0
- * @since 1.0.0
- * */
+import java.util.Set;
 
 @Entity
 @Data
@@ -24,4 +19,11 @@ public class Role implements Serializable {
 
     @Column(name = "name", nullable = false)
     private String name;
+
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
+    private Set<User> users;
+
+    public Role(String name) {
+        this.name = name;
+    }
 }

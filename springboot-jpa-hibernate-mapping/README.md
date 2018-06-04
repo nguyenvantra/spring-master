@@ -5,7 +5,7 @@ __Association mappings__ are one of the key features of JPA and Hibernate. They 
 * __Many-to-One__
 * __Many-to-Many__
 
-#### Dependencies in project
+#### 1. Dependencies in project ([pom.xml](https://github.com/nguyenvantra/spring-master/blob/master/springboot-jpa-hibernate-mapping/pom.xml))
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -37,5 +37,57 @@ __Association mappings__ are one of the key features of JPA and Hibernate. They 
         </dependency>
     </dependencies>
 
+#### 2. Mapping One-to-One Relationship
+Create 2 entities __User__ and __Token__ that having One-to-One relationship
+
+User entity:
+```java 
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@Table(name = "user")
+public class User implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @NotNull
+    private String email;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "token_id")
+    private Token token;
+
+    public User(String email, Token token) {
+        this.email = email;
+        this.token = token;
+    }
+}
+```
+
+Token entity:
+```java
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@Table(name = "token")
+public class Token implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @NotNull
+    private String token;
+
+    @OneToOne(mappedBy = "token")
+    private User user;
+
+    public Token(String token) {
+        this.token = token;
+    }
+}
+```
 
  

@@ -40,7 +40,7 @@ __Association mappings__ are one of the key features of JPA and Hibernate. They 
 #### 2. Mapping One-to-One Relationship
 Create 2 entities __User__ and __Token__ that having One-to-One relationship
 
-User entity:
+Declare __User__ entity:
 ```java 
 @Entity
 @Getter
@@ -66,7 +66,7 @@ public class User implements Serializable {
 }
 ```
 
-Token entity:
+Declare __Token__ entity:
 ```java
 @Entity
 @Getter

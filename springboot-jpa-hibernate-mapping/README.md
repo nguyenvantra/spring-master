@@ -6,41 +6,43 @@ __Association mappings__ are one of the key features of JPA and Hibernate. They 
 * __Many-to-Many__
 
 #### 1. Dependencies in project ([pom.xml](https://github.com/nguyenvantra/spring-master/blob/master/springboot-jpa-hibernate-mapping/pom.xml))
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
 
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <scope>runtime</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <optional>true</optional>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+```
 
 #### 2. Mapping One-to-One Relationship
 Create 2 entities __User__ and __Token__ that having One-to-One relationship
 
-Declare __User__ entity:
+Implement __User__ entity:
 ```java 
 @Entity
 @Getter
@@ -66,7 +68,7 @@ public class User implements Serializable {
 }
 ```
 
-Declare __Token__ entity:
+Implement __Token__ entity:
 ```java
 @Entity
 @Getter
@@ -90,4 +92,115 @@ public class Token implements Serializable {
 }
 ```
 
- 
+#### 3. Mapping One-to-Many Relationship
+Create 2 entities __Category__ and __Product__ that having One-to-Many relationship
+
+Implement __Category__ entity:
+```java
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@Table(name = "category")
+public class Category implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull
+    private String name;
+
+    @OneToMany( mappedBy = "category",
+                cascade = CascadeType.ALL,
+                fetch = FetchType.EAGER )
+    private Set<Product> products;
+
+    public Category(String name) {
+        this.name = name;
+    }
+}
+```
+Implement __Product__ entity:
+```java
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@Table(name = "product")
+public class Product implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @NotNull
+    private String name;
+
+    @NotNull
+    private double price;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    public Product(String name, double price, Category category) {
+        this.name = name;
+        this.price = price;
+        this.category = category;
+    }
+}
+```
+
+#### 4. Mapping Many-to-Many Relationship
+Create 2 entities __Student__ and __Subject__ that having Many-to-Many relationship
+
+Implement __Student__ entity:
+```java
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@Table(name = "student")
+public class Student implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @NotNull
+    private String name;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "student_subject",
+            joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "subject_id", referencedColumnName = "id"))
+    private Set<Subject> subjects;
+
+    public Student(String name) {
+        this.name = name;
+    }
+}
+```
+
+Implement __Subject__ entity:
+```java
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@Table(name = "subject")
+public class Subject implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @NotNull
+    private String name;
+
+    @ManyToMany(mappedBy = "subjects")
+    private Set<Student> students;
+
+    public Subject(String name) {
+        this.name = name;
+    }
+}
+```
+

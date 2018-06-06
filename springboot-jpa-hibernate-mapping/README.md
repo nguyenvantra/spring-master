@@ -40,7 +40,8 @@ __Association mappings__ are one of the key features of JPA and Hibernate. They 
 ```
 
 #### 2. Mapping One-to-One Relationship
-Create 2 entities __User__ and __Token__ that having One-to-One relationship
+Create 2 entities __User__ and __Token__ that having One-to-One relationship:
+`User 1------1 Token`
 
 Implement __User__ entity:
 ```java 
@@ -93,7 +94,8 @@ public class Token implements Serializable {
 ```
 
 #### 3. Mapping One-to-Many Relationship
-Create 2 entities __Category__ and __Product__ that having One-to-Many relationship
+Create 2 entities __Category__ and __Product__ that having One-to-Many relationship:
+`Category 1------N Product`
 
 Implement __Category__ entity:
 ```java
@@ -151,7 +153,8 @@ public class Product implements Serializable {
 ```
 
 #### 4. Mapping Many-to-Many Relationship
-Create 2 entities __Student__ and __Subject__ that having Many-to-Many relationship
+Create 2 entities __Student__ and __Subject__ that having Many-to-Many relationship:
+`Student N------N Subject`
 
 Implement __Student__ entity:
 ```java

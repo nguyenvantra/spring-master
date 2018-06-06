@@ -43,7 +43,7 @@ __Association mappings__ are one of the key features of JPA and Hibernate. They 
 Create 2 entities __User__ and __Token__ that having One-to-One relationship:
 `User 1------1 Token`
 
-Implement __User__ entity:
+Implement [__User__](https://github.com/nguyenvantra/spring-master/blob/master/springboot-jpa-hibernate-mapping/src/main/java/com/darkness/entity/one2one/User.java) entity:
 ```java 
 @Entity
 @Getter
@@ -69,7 +69,7 @@ public class User implements Serializable {
 }
 ```
 
-Implement __Token__ entity:
+Implement [__Token__](https://github.com/nguyenvantra/spring-master/blob/master/springboot-jpa-hibernate-mapping/src/main/java/com/darkness/entity/one2one/Token.java) entity:
 ```java
 @Entity
 @Getter
@@ -97,7 +97,7 @@ public class Token implements Serializable {
 Create 2 entities __Category__ and __Product__ that having One-to-Many relationship:
 `Category 1------N Product`
 
-Implement __Category__ entity:
+Implement [__Category__](https://github.com/nguyenvantra/spring-master/blob/master/springboot-jpa-hibernate-mapping/src/main/java/com/darkness/entity/many2one/Category.java) entity:
 ```java
 @Entity
 @Getter
@@ -122,7 +122,7 @@ public class Category implements Serializable {
     }
 }
 ```
-Implement __Product__ entity:
+Implement [__Product__](https://github.com/nguyenvantra/spring-master/blob/master/springboot-jpa-hibernate-mapping/src/main/java/com/darkness/entity/many2one/Product.java) entity:
 ```java
 @Entity
 @Getter
@@ -156,7 +156,7 @@ public class Product implements Serializable {
 Create 2 entities __Student__ and __Subject__ that having Many-to-Many relationship:
 `Student N------N Subject`
 
-Implement __Student__ entity:
+Implement [__Student__](https://github.com/nguyenvantra/spring-master/blob/master/springboot-jpa-hibernate-mapping/src/main/java/com/darkness/entity/many2many/Student.java) entity:
 ```java
 @Entity
 @Getter
@@ -183,7 +183,7 @@ public class Student implements Serializable {
 }
 ```
 
-Implement __Subject__ entity:
+Implement [__Subject__](https://github.com/nguyenvantra/spring-master/blob/master/springboot-jpa-hibernate-mapping/src/main/java/com/darkness/entity/many2many/Subject.java) entity:
 ```java
 @Entity
 @Getter
